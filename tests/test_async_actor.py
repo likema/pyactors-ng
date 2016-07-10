@@ -11,19 +11,25 @@ from asyncactor import Actor  # noqa
 class Pinger(Actor):
     async def receive(self, message):
         print(message)
-        pong.send('ping')
         await asyncio.sleep(3)
+        pong.send('ping')
+
+    async def handle_timeout(self):
+        print('pinger timeout')
 
 
 class Ponger(Actor):
     async def receive(self, message):
         print(message)
-        ping.send('pong')
         await asyncio.sleep(3)
+        ping.send('pong')
+
+    async def handle_timeout(self):
+        print('ponger timeout')
 
 
-ping = Pinger()
-pong = Ponger()
+ping = Pinger(1)
+pong = Ponger(1)
 
 ping.send('start')
 
