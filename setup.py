@@ -18,7 +18,8 @@ setup(
     license='GPLv3',
     author='Like Ma',
     author_email='likemartinma@gmail.com',
-    description='Next generation python actors.',
+    description=(
+        'Next generation python actors with gevent and async implementations'),
     platforms='any',
     install_requires=[
         'gevent',
