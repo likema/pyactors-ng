@@ -1,13 +1,19 @@
 # -*- coding: utf-8 -*-
+import sys
+
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
+packages = ['geventactor']
+if sys.version_info >= (3, 5):
+    packages.append('asyncactor')
+
 setup(
     name='pyactors-ng',
-    version='0.1',
-    packages=['geventactor'],
+    version='0.2',
+    packages=packages,
     url='https://github.com/likema/pyactors-ng',
     license='GPLv3',
     author='Like Ma',
