@@ -7,19 +7,24 @@ import zmq
 
 
 class Actor(object):
-    def __init__(self, sub_addr, pub_addr, receive_timeout=None):
+    def __init__(self, sub_addr, pub_addr=None, receive_timeout=None):
         context = zmq.Context()
 
         self._sub = context.socket(zmq.SUB)
         self._sub.connect(sub_addr)
         self._sub.setsockopt(zmq.SUBSCRIBE, b'')
 
-        self._pub = context.socket(zmq.PUB)
-        self._pub.bind(pub_addr)
+        if pub_addr:
+            self._pub = context.socket(zmq.PUB)
+            self._pub.bind(pub_addr)
+        else:
+            self._pub = None
+
         self.receive_timeout = receive_timeout * 1000
 
     def send(self, message):
-        self._pub.send_json(message)
+        if self._pub:
+            self._pub.send_json(message)
 
     def receive(self, message):
         pass
