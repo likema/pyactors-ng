@@ -12,7 +12,7 @@ if sys.version_info >= (3, 5):
 
 setup(
     name='pyactors-ng',
-    version='0.2',
+    version='0.4',
     packages=packages,
     url='https://github.com/likema/pyactors-ng',
     license='GPLv3',
@@ -25,7 +25,7 @@ setup(
     install_requires=[
         'gevent',
         'message>=0.2.2',
-        'pyzmq'
+        'pyzmq>=2.2.0.1'
     ],
     dependency_links=[
         ('https://github.com/likema/python-message/archive/master.zip'

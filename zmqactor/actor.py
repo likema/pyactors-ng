@@ -2,12 +2,20 @@
 
 import logging
 import traceback
+from sys import version_info
 
-import zmq
+
+# xrange no longer exits since python 3.0
+if version_info >= (3, 0):
+    xrange = range
 
 
 class Actor(object):
-    def __init__(self, sub_addr, pub_addr=None, receive_timeout=None):
+    def __init__(
+            self, sub_addr, pub_addr=None, receive_timeout=None, zmq=None):
+        if not zmq:
+            import zmq
+
         context = zmq.Context()
 
         self._sub = context.socket(zmq.SUB)
