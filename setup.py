@@ -6,7 +6,7 @@ try:
 except ImportError:
     from distutils.core import setup
 
-packages = ['geventactor']
+packages = ['geventactor', 'processactor', 'zmqactor']
 if sys.version_info >= (3, 5):
     packages.append('asyncactor')
 
@@ -19,11 +19,13 @@ setup(
     author='Like Ma',
     author_email='likemartinma@gmail.com',
     description=(
-        'Next generation python actors with gevent and async implementations'),
+        'Next generation python actors with gevent, async, process and '
+        'zeromq implementations'),
     platforms='any',
     install_requires=[
         'gevent',
-        'message>=0.2.2'
+        'message>=0.2.2',
+        'pyzmq'
     ],
     dependency_links=[
         ('https://github.com/likema/python-message/archive/master.zip'
