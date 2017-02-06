@@ -14,7 +14,7 @@ if sys.version_info >= (3, 5):
 
 setup(
     name='pyactors-ng',
-    version='0.4',
+    version='0.5',
     packages=packages,
     url='https://github.com/likema/pyactors-ng',
     license='GPLv3',

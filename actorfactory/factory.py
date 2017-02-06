@@ -17,4 +17,35 @@ def make_publisher(actor):
 
     return Publisher
 
+
+def make_actor(base, queue, empty, underscore_run=False):
+    def run(self):
+        self.running = True
+
+        while self.running:
+            try:
+                message = self.inbox.get(True, self.receive_timeout)
+            except empty:
+                self.handle_timeout()
+            else:
+                self.receive(message)
+
+    class Actor(base):
+        def __init__(self, receive_timeout=None):
+            self.inbox = queue()
+            self.receive_timeout = receive_timeout
+            base.__init__(self)
+
+        def send(self, message):
+            self.inbox.put_nowait(message)
+
+        def receive(self, message):
+            raise NotImplemented()
+
+        def handle_timeout(self):
+            pass
+
+    setattr(Actor, '_run' if underscore_run else 'run', run)
+    return Actor
+
 # vim: ts=4 sw=4 sts=4 et:

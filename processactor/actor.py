@@ -6,30 +6,8 @@ try:
 except ImportError:
     from queue import Empty
 
+from actorfactory import make_actor
 
-class Actor(Process):
-    def __init__(self, receive_timeout=None):
-        Process.__init__(self)
-        self.inbox = Queue()
-        self.receive_timeout = receive_timeout
 
-    def send(self, message):
-        self.inbox.put_nowait(message)
-
-    def receive(self, message):
-        raise NotImplemented()
-
-    def handle_timeout(self):
-        pass
-
-    def run(self):
-        self.running = True
-        while self.running:
-            try:
-                message = self.inbox.get(True, self.receive_timeout)
-            except Empty:
-                self.handle_timeout()
-            else:
-                self.receive(message)
-
+Actor = make_actor(Process, Queue, Empty)
 # vim: ts=4 sw=4 sts=4 et:
