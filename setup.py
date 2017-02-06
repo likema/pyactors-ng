@@ -6,7 +6,7 @@ try:
 except ImportError:
     from distutils.core import setup
 
-packages = ['geventactor', 'processactor', 'zmqactor']
+packages = ['geventactor', 'processactor', 'threadactor', 'zmqactor']
 if sys.version_info >= (3, 5):
     packages.append('asyncactor')
 

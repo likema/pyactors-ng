@@ -5,7 +5,7 @@ import time
 from os.path import abspath, dirname, join
 
 sys.path.insert(0, abspath(join(dirname(sys.argv[0]), '..')))
-from threadactor import Actor  # noqa
+from processactor import Actor  # noqa
 
 
 class Pinger(Actor):

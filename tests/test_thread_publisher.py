@@ -5,36 +5,38 @@ import time
 from os.path import abspath, dirname, join
 
 sys.path.insert(0, abspath(join(dirname(sys.argv[0]), '..')))
-from threadactor import Actor  # noqa
+from threadactor import Publisher  # noqa
 
 
-class Pinger(Actor):
+class Pinger(Publisher):
     def receive(self, message):
         print(message)
         time.sleep(2)
-        pong.send('ping')
+        self.publish('ping')
 
     def handle_timeout(self):
         print('pinger timeout')
 
 
-class Ponger(Actor):
+class Ponger(Publisher):
     def receive(self, message):
         print(message)
         time.sleep(2)
-        ping.send('pong')
+        self.publish('ping')
 
     def handle_timeout(self):
         print('ponger timeout')
 
 
-ping = Pinger(1)
-pong = Ponger(1)
+ping = Pinger('evt.ping', 1)
+pong = Ponger('evt.pong', 1)
 
+ping.subcribe(pong)
+pong.subcribe(ping)
 ping.start()
 pong.start()
 
-ping.send('start')
+ping.publish('start')
 
 pong.join()
 ping.join()
